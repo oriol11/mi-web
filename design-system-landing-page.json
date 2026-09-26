@@ -1,0 +1,316 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/design-system/landing-page-premium.json",
+  "name": "Aurora Premium Landing",
+  "version": "1.0.0",
+  "description": "Design system specification for a premium Next.js landing page with glassmorphism, dark-mode-first aesthetic, and refined motion.",
+  "meta": {
+    "framework": "Next.js 14 (App Router)",
+    "styling_engine": "Tailwind CSS v4 + CSS Variables",
+    "font_delivery": "next/font (Inter + Space Grotesk)",
+    "render_target": "SSR / Static Export",
+    "optimizer": "Turbopack",
+    "color_space": "sRGB",
+    "accessibility_target": "WCAG 2.2 AA (contrast ratio >= 4.5:1 for text)",
+    "dark_mode_default": true
+  },
+  "tokens": {
+    "color": {
+      "description": "Palette is dark-mode-first. Light mode variants inverted via CSS variable override (not shown here — use prefers-color-scheme or explicit .light class). All neutrals are cool gray (blue undertone).",
+      "primary": {
+        "name": "Aurora Cyan",
+        "hex": "#22d3ee",
+        "rgb": "34, 211, 238",
+        "hsl": "187, 91%, 53%",
+        "dark": { "hex": "#06b6d4", "rgb": "6, 182, 212", "hsl": "187, 91%, 43%" },
+        "usage": ["primary CTAs", "gradient anchors", "focus rings", "accent links"]
+      },
+      "secondary": {
+        "name": "Violet Mist",
+        "hex": "#a78bfa",
+        "rgb": "167, 139, 250",
+        "hsl": "262, 83%, 76%",
+        "dark": { "hex": "#8b5cf6", "rgb": "139, 92, 246", "hsl": "262, 83%, 66%" },
+        "usage": ["secondary buttons", "gradient second stops", "decorative glows"]
+      },
+      "accent": {
+        "name": "Amber Glow",
+        "hex": "#fbbf24",
+        "rgb": "251, 191, 36",
+        "hsl": "43, 92%, 56%",
+        "dark": { "hex": "#f59e0b", "rgb": "245, 158, 11", "hsl": "43, 92%, 50%" },
+        "usage": ["highlight badges", "pricing tags", "micro-interactions"]
+      },
+      "neutral": {
+        "name": "Slate Cool",
+        "scales": [
+          { "name": "50",  "hex": "#f8fafc",  "rgb": "248, 250, 252", "usage": "light surfaces (if light)" },
+          { "name": "100", "hex": "#f1f5f9",  "rgb": "241, 245, 249", "usage": "cards on light" },
+          { "name": "200", "hex": "#e2e8f0",  "rgb": "226, 232, 240" },
+          { "name": "300", "hex": "#cbd5e1",  "rgb": "203, 213, 225" },
+          { "name": "400", "hex": "#94a3b8",  "rgb": "148, 163, 184", "usage": "subtle borders" },
+          { "name": "500", "hex": "#64748b",  "rgb": "100, 116, 139", "usage": "secondary text" },
+          { "name": "600", "hex": "#475569",  "rgb": "71, 85, 105", "usage": "body copy (light)" },
+          { "name": "700", "hex": "#334155",  "rgb": "51, 65, 85", "usage": "body copy (dark)" },
+          { "name": "800", "hex": "#1e293b",  "rgb": "30, 41, 59", "usage": "cards / panels (dark)" },
+          { "name": "900", "hex": "#0f172a",  "rgb": "15, 23, 42", "usage": "page bg (dark)" },
+          { "name": "950", "hex": "#020617",  "rgb": "2, 6, 23",  "usage": "deep dark bg, hero base" }
+        ],
+        "dark": { "name": "Slate Cool (Dark)", "base": "#0f172a", "surface": "#1e293b", "elevated": "#334155" }
+      },
+      "dark": {
+        "surface_primary": { "hex": "#0f172a", "rgb": "15, 23, 42", "name": "Deep Navy" },
+        "surface_secondary": { "hex": "#1e293b", "rgb": "30, 41, 59", "name": "Elevated Card" },
+        "surface_tertiary": { "hex": "#334155", "rgb": "51, 65, 85", "name": "Hover / Active" },
+        "text_primary": { "hex": "#f8fafc", "rgb": "248, 250, 252" },
+        "text_secondary": { "hex": "#94a3b8", "rgb": "148, 163, 184" },
+        "text_muted": { "hex": "#64748b", "rgb": "100, 116, 139" },
+        "border_subtle": { "hex": "#334155", "rgb": "51, 65, 85" },
+        "border_default": { "hex": "#475569", "rgb": "71, 85, 105" }
+      }
+    },
+    "typography": {
+      "font_families": {
+        "display": { "name": "Space Grotesk", "weights": [400, 500, 600, 700], "style": "Geometric sans, slightly squarish, high x-height. Use for H1, H2, hero statements, brand marks." },
+        "body": { "name": "Inter", "weights": [300, 400, 500, 600], "style": "Highly legible neutral sans. Use for paragraphs, labels, UI text, nav." },
+        "mono": { "name": "JetBrains Mono", "weights": [400, 500], "style": "For code snippets, technical specs, pricing tables numeric columns." }
+      },
+      "scale": [
+        { "token": "text-xs",    "size": "0.75rem",  "line": "1rem",  "letter": "0.01em",  "weight": 400,  "usage": "caption, label, tag text" },
+        { "token": "text-sm",    "size": "0.875rem", "line": "1.25rem", "letter": "-0.01em", "weight": 400,  "usage": "body small, meta info" },
+        { "token": "text-base",  "size": "1rem",    "line": "1.625rem", "letter": "-0.01em", "weight": 400,  "usage": "primary body copy" },
+        { "token": "text-lg",    "size": "1.125rem","line": "1.75rem", "letter": "-0.02em", "weight": 400,  "usage": "lead paragraph, description" },
+        { "token": "text-xl",    "size": "1.25rem", "line": "1.75rem", "letter": "-0.02em", "weight": 500,  "usage": "subheadings, card titles" },
+        { "token": "text-2xl",   "size": "1.5rem",  "line": "2rem",    "letter": "-0.03em", "weight": 600,  "usage": "section titles (mobile)" },
+        { "token": "text-3xl",   "size": "1.875rem","line": "2.25rem","letter": "-0.04em", "weight": 700,  "usage": "section titles (desktop)" },
+        { "token": "text-4xl",   "size": "2.25rem", "line": "2.5rem", "letter": "-0.05em", "weight": 700,  "usage": "hero headline (mobile)" },
+        { "token": "text-5xl",   "size": "3rem",    "line": "3.25rem","letter": "-0.06em", "weight": 700,  "usage": "hero headline (desktop)" },
+        { "token": "text-6xl",   "size": "3.75rem", "line": "3.75rem","letter": "-0.06em", "weight": 700,  "usage": "hero headline (wide)" },
+        { "token": "text-7xl",   "size": "4.5rem",  "line": "4.5rem",  "letter": "-0.08em", "weight": 700,  "usage": "brand display / marquee" },
+        { "token": "text-8xl",   "size": "6rem",    "line": "6rem",    "letter": "-0.08em", "weight": 700,  "usage": "hero mega / background type" },
+        { "token": "text-9xl",   "size": "8rem",    "line": "8rem",    "letter": "-0.08em", "weight": 700,  "usage": "decorative only" }
+      ],
+      "line_height_scale": { "tight": 1.05, "snug": 1.2, "normal": 1.625, "relaxed": 1.75, "loose": 2.0 },
+      "max_widths": { "prose": "65ch", "section_narrow": "720px", "section_standard": "960px", "section_wide": "1280px", "full_bleed": "100vw" }
+    },
+    "spacing": {
+      "description": "4px base grid (0.25rem). All spacing is multiples of 0.25rem to maintain grid alignment.",
+      "scale": [
+        { "token": "space-0.5", "rem": "0.125rem", "px": 2 },
+        { "token": "space-1",   "rem": "0.25rem",  "px": 4 },
+        { "token": "space-2",   "rem": "0.5rem",   "px": 8 },
+        { "token": "space-3",   "rem": "0.75rem",  "px": 12 },
+        { "token": "space-4",   "rem": "1rem",     "px": 16 },
+        { "token": "space-5",   "rem": "1.25rem",  "px": 20 },
+        { "token": "space-6",   "rem": "1.5rem",   "px": 24 },
+        { "token": "space-8",   "rem": "2rem",     "px": 32 },
+        { "token": "space-10",  "rem": "2.5rem",   "px": 40 },
+        { "token": "space-12",  "rem": "3rem",     "px": 48 },
+        { "token": "space-16",  "rem": "4rem",     "px": 64 },
+        { "token": "space-20",  "rem": "5rem",     "px": 80 },
+        { "token": "space-24",  "rem": "6rem",     "px": 96 },
+        { "token": "space-32",  "rem": "8rem",     "px": 128 },
+        { "token": "space-40",  "rem": "10rem",    "px": 160 },
+        { "token": "space-48",  "rem": "12rem",    "px": 192 },
+        { "token": "space-64",  "rem": "16rem",    "px": 256 },
+        { "token": "space-80",  "rem": "20rem",    "px": 320 },
+        { "token": "space-96",  "rem": "24rem",    "px": 384 }
+      ],
+      "section_padding": { "mobile": "space-16 (4rem)", "tablet": "space-24 (6rem)", "desktop": "space-32 (8rem)", "wide": "space-40 (10rem)" },
+      "component_gap": "space-4 (1rem) for cards, space-2 (0.5rem) for buttons in groups"
+    },
+    "radius": {
+      "description": "Rounded but not playful. Uses 2px increments. Small radii for interactive elements; larger for cards/panels.",
+      "scale": [
+        { "token": "radius-xs",  "rem": "0.125rem", "px": 2 },
+        { "token": "radius-sm",  "rem": "0.25rem",  "px": 4 },
+        { "token": "radius",    "rem": "0.5rem",   "px": 8 },
+        { "token": "radius-md",  "rem": "0.75rem",  "px": 12 },
+        { "token": "radius-lg",  "rem": "1rem",     "px": 16 },
+        { "token": "radius-xl",  "rem": "1.5rem",   "px": 24 },
+        { "token": "radius-2xl", "rem": "2rem",     "px": 32 },
+        { "token": "radius-3xl", "rem": "3rem",     "px": 48 },
+        { "token": "radius-full", "rem": "9999px", "px": "full" }
+      ],
+      "usage": {
+        "buttons": "radius-full (pill) for primary/secondary; radius-md for tertiary/ghost",
+        "cards": "radius-2xl for feature cards; radius-xl for pricing cards; radius-lg for testimonial cards",
+        "inputs": "radius-lg for text inputs; radius-md for selects",
+        "images": "radius-xl for hero images; radius-2xl for gallery",
+        "badges": "radius-full"
+      }
+    },
+    "shadow_elevation": {
+      "description": "Soft, diffuse shadows with cool gray tint. No hard drop shadows. All have a very subtle colored glow for premium feel.",
+      "tokens": [
+        { "name": "none",        "box_shadow": "none" },
+        { "name": "soft-xs",     "box_shadow": "0 1px 3px rgba(15,23,42,0.12), 0 1px 2px rgba(15,23,42,0.08)" },
+        { "name": "soft-sm",     "box_shadow": "0 4px 6px -1px rgba(15,23,42,0.18), 0 2px 4px -2px rgba(15,23,42,0.10)" },
+        { "name": "soft-md",     "box_shadow": "0 10px 15px -3px rgba(15,23,42,0.20), 0 4px 6px -4px rgba(15,23,42,0.12)" },
+        { "name": "soft-lg",     "box_shadow": "0 20px 25px -5px rgba(15,23,42,0.22), 0 8px 10px -6px rgba(15,23,42,0.14)" },
+        { "name": "soft-xl",     "box_shadow": "0 25px 50px -12px rgba(15,23,42,0.25), 0 12px 20px -10px rgba(15,23,42,0.15)" },
+        { "name": "glow-primary", "box_shadow": "0 0 40px rgba(34,211,238,0.15), 0 0 80px rgba(34,211,238,0.08)" },
+        { "name": "glow-secondary", "box_shadow": "0 0 40px rgba(167,139,250,0.15), 0 0 80px rgba(167,139,250,0.08)" },
+        { "name": "glow-accent", "box_shadow": "0 0 40px rgba(251,191,36,0.15), 0 0 80px rgba(251,191,36,0.08)" }
+      ],
+      "hover_shift": "shadow increases by one tier (e.g., soft-sm -> soft-md) with 150ms ease. Glows intensify via opacity shift toward 0.25."
+    },
+    "glassmorphism": {
+      "description": "Frosted glass panels using CSS backdrop-filter. Works best on dark backgrounds with subtle radial glows behind.",
+      "specs": [
+        { "name": "glass-base", "backdrop_filter": "blur(12px) saturate(140%)", "background": "rgba(30, 41, 59, 0.55)", "border": "1px solid rgba(255,255,255,0.08)", "usage": "cards, nav, modals" },
+        { "name": "glass-heavy", "backdrop_filter": "blur(24px) saturate(160%)", "background": "rgba(30, 41, 59, 0.70)", "border": "1px solid rgba(255,255,255,0.10)", "usage": "hero overlay, sticky header, lightbox" },
+        { "name": "glass-subtle", "backdrop_filter": "blur(8px) saturate(120%)", "background": "rgba(30, 41, 59, 0.35)", "border": "1px solid rgba(255,255,255,0.05)", "usage": "tags, pill badges" },
+        { "name": "glass-gradient", "backdrop_filter": "blur(20px)", "background": "linear-gradient(135deg, rgba(34,211,238,0.08) 0%, rgba(167,139,250,0.08) 100%)", "border": "1px solid rgba(255,255,255,0.06)", "usage": "accent feature cards" }
+      ],
+      "performance_notes": "Use transform: translateZ(0) to promote to GPU layer. Avoid backdrop-filter on large scroll-heavy sections; restrict to fixed/sticky containers and hero overlays.",
+      "fallback": "Solid rgba(30,41,59,0.85) with reduced opacity when backdrop-filter is unsupported (older Safari < 9, IE)."
+    },
+    "gradients": {
+      "description": "Linear gradients with cool tones. All have a low saturation to avoid neon. Used for backgrounds, text clips, and decorative shapes.",
+      "definitions": [
+        { "name": "hero-aurora", "type": "linear-gradient", "angle": "135deg", "stops": ["rgba(34,211,238,0.18) 0%", "rgba(167,139,250,0.14) 50%", "rgba(251,191,36,0.10) 100%"], "usage": "hero background radial replacement" },
+        { "name": "hero-deep", "type": "linear-gradient", "angle": "180deg", "stops": ["#020617 0%", "#0f172a 60%", "#1e293b 100%"], "usage": "base hero dark bg" },
+        { "name": "gradient-text", "type": "linear-gradient", "angle": "135deg", "stops": ["#22d3ee 0%", "#a78bfa 50%", "#fbbf24 100%"], "usage": "text-fill with background-clip: text" },
+        { "name": "gradient-btn", "type": "linear-gradient", "angle": "135deg", "stops": ["#22d3ee 0%", "#a78bfa 100%"], "usage": "primary button gradient" },
+        { "name": "gradient-card-top", "type": "linear-gradient", "angle": "180deg", "stops": ["rgba(255,255,255,0.08) 0%", "rgba(255,255,255,0.00) 100%"], "usage": "subtle top highlight on cards" },
+        { "name": "mesh-ambient", "type": "radial-gradient", "position": "top left", "stops": ["rgba(34,211,238,0.12) 0%", "transparent 60%"], "usage": "ambient glow behind hero content" },
+        { "name": "mesh-secondary", "type": "radial-gradient", "position": "bottom right", "stops": ["rgba(167,139,250,0.10) 0%", "transparent 60%"], "usage": "secondary ambient glow" }
+      ]
+    },
+    "animation": {
+      "description": "Motion is purposeful, not decorative. Uses spring physics for interactive elements; ease curves for layout transitions.",
+      "durations": [
+        { "token": "duration-instant", "ms": 0, "use": "state changes with no visual delay" },
+        { "token": "duration-fast",    "ms": 100, "use": "hover micro-interactions, tooltip" },
+        { "token": "duration-normal",  "ms": 200, "use": "button press, card hover shift" },
+        { "token": "duration-slow",    "ms": 300, "use": "panel open, dropdown" },
+        { "token": "duration-slower",  "ms": 500, "use": "page transitions, hero entrance" },
+        { "token": "duration-slowest", "ms": 800, "use": "hero sequence, scroll reveal" }
+      ],
+      "easings": [
+        { "token": "ease-out-expo", "cubic": "cubic-bezier(0.16, 1, 0.3, 1)", "use": "entry animations (elements rising/fading in)" },
+        { "token": "ease-out-quart", "cubic": "cubic-bezier(0.25, 1, 0.5, 1)", "use": "card hover, button background" },
+        { "token": "ease-in-out", "cubic": "cubic-bezier(0.4, 0, 0.2, 1)", "use": "layout shifts, responsive reflow" },
+        { "token": "ease-spring", "description": "Not a cubic — use spring() from Framer Motion / CSS spring approximation: stiffness=120, damping=20, mass=1. Use for interactive physics." }
+      ],
+      "spring_configs": [
+        { "name": "button-press", "stiffness": 400, "damping": 30, "mass": 1, "use": "button scale on click" },
+        { "name": "card-hover", "stiffness": 300, "damping": 25, "mass": 1, "use": "card lift / shadow grow" },
+        { "name": "modal-enter", "stiffness": 200, "damping": 20, "mass": 1, "use": "modal scale + fade" },
+        { "name": "scroll-reveal", "stiffness": 100, "damping": 15, "mass": 1, "use": "elements entering viewport" },
+        { "name": "hero-stagger", "stiffness": 150, "damping": 18, "mass": 1, "use": "sequential hero elements" }
+      ],
+      "keyframe_patterns": [
+        { "name": "fade-up", "from": "opacity:0; transform:translateY(24px)", "to": "opacity:1; transform:translateY(0)" },
+        { "name": "fade-in", "from": "opacity:0", "to": "opacity:1" },
+        { "name": "scale-in", "from": "opacity:0; transform:scale(0.96)", "to": "opacity:1; transform:scale(1)" },
+        { "name": "blur-in", "from": "opacity:0; filter:blur(12px)", "to": "opacity:1; filter:blur(0)" },
+        { "name": "gradient-shift", "description": "Slow background-position shift (0% -> 100%) over 8s loop with ease-in-out. Use on hero mesh."
+      ]
+    },
+    "responsive": {
+      "breakpoints": [
+        { "name": "xs",     "min": "0px",     "max": "479px",  "label": "extra small",   "cols": 1, "padding": "space-4" },
+        { "name": "sm",     "min": "480px",   "max": "639px",  "label": "small",         "cols": 2, "padding": "space-6" },
+        { "name": "md",     "min": "640px",   "max": "1023px", "label": "medium",        "cols": 2, "padding": "space-8" },
+        { "name": "lg",     "min": "1024px",  "max": "1279px", "label": "large",         "cols": 3, "padding": "space-10" },
+        { "name": "xl",     "min": "1280px",  "max": "1535px", "label": "extra large",   "cols": 4, "padding": "space-12" },
+        { "name": "2xl",    "min": "1536px",  "max": "Infinity","label": "2x large",      "cols": 4, "padding": "space-16" }
+      ],
+      "container_max_widths": { "xs": "100%", "sm": "540px", "md": "720px", "lg": "1024px", "xl": "1280px", "2xl": "1400px" },
+      "typography_scale_factor": { "xs": 0.875, "sm": 1.0, "md": 1.0, "lg": 1.0, "xl": 1.125, "2xl": 1.25 },
+      "nav_behavior": { "xs": "hamburger + full-screen overlay", "sm": "hamburger + overlay", "md": "horizontal compact", "lg": "horizontal full", "xl": "horizontal full with logo + links + CTA" },
+      "hero_layout": { "xs": "stacked (text above image)", "md": "split 50/50", "lg": "split 55/45 with larger text" }
+    },
+    "components": {
+      "navigation": {
+        "style": "glass-heavy (blur 24px, bg 0.70)",
+        "height": "72px",
+        "sticky": true,
+        "border_bottom": "1px solid rgba(255,255,255,0.08)"
+      },
+      "button_primary": {
+        "shape": "radius-full",
+        "gradient": "gradient-btn (cyan -> violet)",
+        "padding": "space-3 space-6 (py-3 px-6)",
+        "font": "body, 500, text-base",
+        "shadow": "soft-md + glow-primary on hover",
+        "interaction": "scale(1.02) + shadow increase + glow intensity to 0.25, duration-normal (200ms) ease-out-expo"
+      },
+      "button_secondary": {
+        "shape": "radius-full",
+        "style": "glass-base (bg 0.55)",
+        "border": "1px solid rgba(255,255,255,0.12)",
+        "padding": "space-3 space-6",
+        "font": "body, 500, text-base",
+        "shadow": "soft-sm",
+        "interaction": "bg opacity to 0.75 + border brighten, duration-normal"
+      },
+      "card_feature": {
+        "radius": "radius-2xl",
+        "bg": "glass-base (bg 0.55)",
+        "border": "1px solid rgba(255,255,255,0.08)",
+        "padding": "space-8",
+        "shadow": "soft-md",
+        "hover": "lift -translate-y-1 + shadow-xl + border brightened to 0.12, duration-normal ease-out-quart"
+      },
+      "pricing_card": {
+        "radius": "radius-xl",
+        "bg": "rgba(30,41,59,0.60)",
+        "border": "1px solid rgba(255,255,255,0.10)",
+        "padding": "space-8",
+        "highlighted": { "border": "1px solid rgba(34,211,238,0.30)", "shadow": "glow-primary", "bg": "rgba(30,41,59,0.70)" }
+      },
+      "section_divider": {
+        "style": "1px gradient from transparent -> rgba(255,255,255,0.08) -> transparent",
+        "margin": "space-24"
+      }
+    },
+    "accessibility": {
+      "focus_ring": "2px solid #22d3ee, 2px offset, radius-sm",
+      "focus_visible_only": true,
+      "reduced_motion": "Respect prefers-reduced-motion: disable all animations except opacity cross-fades (duration 150ms). Remove spring physics. Keep layout transitions at 150ms.",
+      "contrast_ratios": { "text_primary_on_dark": "15:1 (f8fafc on 0f172a)", "text_secondary_on_dark": "5.8:1 (94a3b8 on 0f172a)", "text_muted_on_dark": "3.5:1 (64748b on 0f172a — decorative only, not for required info)", "primary_on_dark": "4.9:1 (22d3ee on 0f172a)", "accent_on_dark": "4.2:1 (fbbf24 on 0f172a — use sparingly for badges)" },
+      "aria": ["All buttons labeled with aria-label if icon-only", "Nav has aria-current for active page", "Hero has aria-label describing the page purpose", "Pricing cards use region with aria-label per tier"]
+    }
+  },
+  "implementation": {
+    "tailwind_config": {
+      "content": ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+      "theme": {
+        "extend": {
+          "colors": { "aurora": { DEFAULT: "#22d3ee", dark: "#06b6d4" }, "violet": { DEFAULT: "#a78bfa", dark: "#8b5cf6" }, "amber": { DEFAULT: "#fbbf24", dark: "#f59e0b" } },
+          "fontFamily": { "display": ["'Space Grotesk'", "sans-serif"], "body": ["'Inter'", "sans-serif"], "mono": ["'JetBrains Mono'", "monospace"] },
+          "borderRadius": { "4xl": "2rem", "5xl": "2.5rem", "full": "9999px" },
+          "spacing": { "128": "32rem", "144": "36rem" },
+          "boxShadow": { "glow-cyan": "0 0 40px rgba(34,211,238,0.15), 0 0 80px rgba(34,211,238,0.08)", "glow-violet": "0 0 40px rgba(167,139,250,0.15), 0 0 80px rgba(167,139,250,0.08)" }
+        }
+      },
+      "plugins": ["@tailwindcss/typography", "@tailwindcss/forms"]
+    },
+    "css_variables": [
+      "--bg-deep: #020617",
+      "--bg-surface: #0f172a",
+      "--bg-elevated: #1e293b",
+      "--text-primary: #f8fafc",
+      "--text-secondary: #94a3b8",
+      "--text-muted: #64748b",
+      "--border-subtle: rgba(255,255,255,0.08)",
+      "--primary: #22d3ee",
+      "--secondary: #a78bfa",
+      "--accent: #fbbf24",
+      "--radius-card: 2rem",
+      "--shadow-soft: 0 20px 25px -5px rgba(15,23,42,0.22)"
+    ],
+    "next_config_notes": [
+      "Use next/font/google for Inter + Space Grotesk (reduce FOUT/FOIT).",
+      "Enable experimental.turbo for faster builds.",
+      "Add images.unsplash.com / images.unsplash.com to allowed remotePatterns.",
+      "Set up middleware for theme cookie if supporting light/dark toggle.",
+      "Use next/head for meta + preload fonts.",
+      "Consider @vercel/analytics for performance tracking."
+    ],
+    "file_structure": ["app/layout.tsx", "app/page.tsx", "components/Hero.tsx", "components/Navbar.tsx", "components/FeatureGrid.tsx", "components/Pricing.tsx", "components/Testimonials.tsx", "components/Footer.tsx", "components/GlassCard.tsx", "styles/globals.css"]
+  }
+}
