@@ -1,116 +1,35 @@
-"use client"
-
-import { useEffect, useState } from 'react'
-import Hero from '@/components/Hero'
-import Features from '@/components/Features'
-import InteractiveDemos from '@/components/InteractiveDemos'
-import CodeSection from '@/components/CodeSection'
-import Footer from '@/components/Footer'
-
-export default function HomePage() {
-  const [activeSection, setActiveSection] = useState('hero')
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['hero', 'features', 'demos', 'code', 'footer']
-      const scrollPosition = window.scrollY + 100
-
-      for (const section of sections) {
-        const element = document.getElementById(section)
-        if (element) {
-          const { offsetTop, offsetHeight } = element
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
-            break
-          }
-        }
-      }
-    }
-
-    const handleHashChange = () => {
-      const hash = window.location.hash.slice(1)
-      if (hash && ['hero', 'features', 'demos', 'code', 'footer'].includes(hash)) {
-        setActiveSection(hash)
-        const element = document.getElementById(hash)
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' })
-        }
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    window.addEventListener('hashchange', handleHashChange)
-    handleScroll()
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-      window.removeEventListener('hashchange', handleHashChange)
-    }
-  }, [])
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-      if (typeof window !== 'undefined') {
-        window.history.pushState(null, '', `#${sectionId}`)
-      }
-      setActiveSection(sectionId)
-    }
-  }
-
+export default function Home() {
   return (
-    <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
-        <nav aria-label="Main navigation" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <button 
-              onClick={() => scrollToSection('hero')}
-              className="text-xl font-bold text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-[family-name:var(--font-sans)]"
-            >
-              ModernApp
-            </button>
-            
-            <div className="hidden md:flex items-center gap-1">
-              {['hero', 'features', 'demos', 'code', 'footer'].map((section) => (
-                <button
-                  key={section}
-                  onClick={() => scrollToSection(section)}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${activeSection === section
-                    ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
-                    : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100'
-                  }`}
-                  aria-current={activeSection === section ? 'page' : undefined}
-                >
-                  {section.charAt(0).toUpperCase() + section.slice(1)}
-                </button>
-              ))}
-            </div>
-          </div>
-        </nav>
-      </header>
-
-      <main className="pt-16">
-        <section id="hero" aria-labelledby="hero-heading">
-          <Hero />
-        </section>
-        
-        <section id="features" aria-labelledby="features-heading">
-          <Features />
-        </section>
-        
-        <section id="demos" aria-labelledby="demos-heading">
-          <InteractiveDemos />
-        </section>
-        
-        <section id="code" aria-labelledby="code-heading">
-          <CodeSection />
-        </section>
-        
-        <footer id="footer" aria-labelledby="footer-heading">
-          <Footer />
-        </footer>
-      </main>
-    </>
-  )
+    <main className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
+      <h1 className="text-6xl md:text-8xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+        Mi Web
+      </h1>
+      <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mb-8">
+        Creado con Next.js, 10 agentes en paralelo y mucho café.
+      </p>
+      <a
+        href="#"
+        className="inline-block px-8 py-4 rounded-full bg-white text-slate-900 font-bold text-lg hover:bg-slate-200 transition-colors shadow-xl shadow-blue-500/20"
+      >
+        Ver Demo
+      </a>
+      <div className="mt-16 grid md:grid-cols-3 gap-8 max-w-5xl w-full">
+        <div className="p-8 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition">
+          <h3 className="text-xl font-bold mb-2">Hero</h3>
+          <p className="text-slate-400">Animaciones con Framer Motion</p>
+        </div>
+        <div className="p-8 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition">
+          <h3 className="text-xl font-bold mb-2">Features</h3>
+          <p className="text-slate-400">Tarjetas interactivas</p>
+        </div>
+        <div className="p-8 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition">
+          <h3 className="text-xl font-bold mb-2">Code</h3>
+          <p className="text-slate-400">Syntax highlighting</p>
+        </div>
+      </div>
+      <footer className="mt-20 text-slate-500 text-sm">
+        © 2026 — Hecho con 10 agentes en paralelo
+      </footer>
+    </main>
+  );
 }
